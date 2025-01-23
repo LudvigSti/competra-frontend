@@ -6,6 +6,7 @@ import './App.css';
 import LoginPage from './pages/login';
 import RegisterPage from './pages/register';
 import GroupPage from './pages/group';
+import CompetraDashboard from './pages/dashboard';
 
 function App() {
 	return (
@@ -13,9 +14,7 @@ function App() {
 			<Routes>
 				<Route path="/" element={<LoginPage />} />
 				<Route path="/register" element={<RegisterPage />} />
-
-				{/* TODO: Link to dashboard page when done and protect route (user needs to be logged in) */}
-				<Route path="/dashboard" />
+				<Route path="/dashboard" element={<CompetraDashboard />} />
 				<Route path="/group/:id" element={<GroupPage />} />
 			</Routes>
 		</>
