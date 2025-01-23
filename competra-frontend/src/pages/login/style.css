@@ -1,0 +1,179 @@
+/* style.css */
+.login-container {
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--background-color);
+}
+
+.login-box {
+	background: var(--primary-background-color);
+	padding: 2rem;
+	border-radius: 10px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	width: 100%;
+	max-width: 400px;
+}
+
+.login-box h1 {
+	text-align: center;
+	color: var(--modal-text-color);
+	margin-bottom: 2rem;
+}
+
+.input-group {
+	margin-bottom: 1.5rem;
+}
+
+.input-group label {
+	display: block;
+	margin-bottom: 0.5rem;
+	color: var(--modal-text-color);
+}
+
+.input-group input {
+	width: 93%;
+	padding: 12px;
+	background-color: var(--secondary-background-color);
+	border: 1px solid #1e3a5f;
+	border-radius: 6px;
+	color: var(--text-color);
+}
+
+.input-group input {
+	width: 93.4%;
+	padding: 0.75rem;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 1rem;
+	font-family: inherit;
+}
+
+.input-group input:focus {
+	outline: none;
+	border-color: var(--button-color);
+}
+
+.login-button {
+	width: 100%;
+	padding: 0.75rem;
+	margin-bottom: 10px;
+	background: var(--button-color);
+	color: white;
+	border: none;
+	border-radius: 4px;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	margin: 10px 0px;
+	font-family: inherit;
+}
+
+.login-button:hover {
+	background: var(--button-hover-color);
+	transform: translateY(-2px); /* Move up by 2 pixels */
+	transition: 0.3s;
+}
+
+.password-container {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.show-password-button {
+	position: absolute;
+	right: 10px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: var(--modal-text-color);
+	font-size: 1rem;
+}
+
+/* Link styles */
+.forgot-password-link {
+	display: block;
+	margin-top: 0.5rem;
+	font-size: 0.875rem;
+	color: var(--button-color);
+	text-decoration: none;
+}
+
+.forgot-password-link:hover {
+	text-decoration: underline;
+}
+
+/* Options row for Remember me and Forgot Password */
+.options-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 0.5rem;
+}
+
+/* Remember me checkbox */
+.remember-me {
+	display: flex;
+	align-items: center; /* Ensures both items are vertically aligned */
+	font-size: 0.875rem;
+	color: var(--modal-text-color);
+	line-height: 1; /* Ensures proper vertical alignment of text */
+}
+
+.remember-me input {
+	margin-right: 0.5rem;
+	cursor: pointer;
+	width: 15px; /* Checkbox size */
+	height: 15px; /* Checkbox size */
+	vertical-align: middle; /* Aligns checkbox with text */
+}
+
+.remember-me label {
+	padding-bottom: 20px;
+}
+
+/* Forgot Password link */
+.forgot-password-link {
+	font-size: 0.875rem;
+	color: var(--button-color);
+	text-decoration: none;
+	margin-left: auto;
+}
+
+.forgot-password-link:hover {
+	text-decoration: underline;
+}
+
+/* Create account link */
+.create-account {
+	text-align: center;
+	margin-top: 1rem;
+}
+
+.create-account a {
+	color: var(--button-color);
+	text-decoration: none;
+	font-size: 0.875rem;
+}
+
+.create-account a:hover {
+	text-decoration: underline;
+}
+
+.navigate-to-register {
+	text-decoration: none;
+	color: var(--button-color);
+	margin-top: 1rem;
+	font-size: 13px;
+}
+
+.navigate-to-register:hover {
+	text-decoration: underline;
+	transition: text-decoration 5s;
+}
+
+input[type='password']::-ms-reveal {
+	display: none;
+}
