@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     permissions:
+       issues: write
        id-token: write
        contents: read
     steps:
