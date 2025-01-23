@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import LoginPage from './pages/login';
 import RegisterPage from './pages/register';
+import GroupPage from './pages/group';
 
 function App() {
 	return (
@@ -15,6 +16,7 @@ function App() {
 
 				{/* TODO: Link to dashboard page when done and protect route (user needs to be logged in) */}
 				<Route path="/dashboard" />
+				<Route path="/group/:id" element={<GroupPage />} />
 			</Routes>
 		</>
 	);
