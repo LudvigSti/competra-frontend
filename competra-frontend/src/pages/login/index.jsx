@@ -38,6 +38,7 @@ const LoginPage = () => {
 
 	const handleLogin = () => {
 		console.log('Login button clicked');
+		<Link to="/dashboard" />; // TODO: Raplce with actual login logic when backend is ready
 	};
 
 	return (

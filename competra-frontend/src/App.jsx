@@ -12,6 +12,9 @@ function App() {
 			<Routes>
 				<Route path="/" element={<LoginPage />} />
 				<Route path="/register" element={<RegisterPage />} />
+
+				{/* TODO: Link to dashboard page when done and protect route (user needs to be logged in) */}
+				<Route path="/dashboard" />
 			</Routes>
 		</>
 	);
