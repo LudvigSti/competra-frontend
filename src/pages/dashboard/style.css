@@ -1,0 +1,66 @@
+.competra-dashboard {
+    padding: 20px;
+    background-color: var(--secondary-background-color);
+    height: 100%;
+  }
+  
+  .competra-dashboard h1 {
+    font-size: 28px;
+    color: var(--primary-text-color);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .group-section {
+    margin-bottom: 40px;
+  }
+  
+  .group-section h2 {
+    font-size: 22px;
+    color: var(--secondary-text-color);
+    margin-bottom: 15px;
+  }
+  
+  .group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: var(--primary-background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px var(--box-shadow-color);
+  }
+  
+  .group-name {
+    font-size: 18px;
+    color: var(--primary-text-color);
+  }
+  
+  .group-action {
+    padding: 5px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .group-action.leave {
+    background-color: var(--button-color-2);
+    color: white;
+  }
+  
+  .group-action.join {
+    background-color: var(--button-color);
+    color: white;
+    
+  }
+
+  .group-action.join:hover {
+    background-color: var(--button-hover-color);
+  }
+  
+  .group-action:hover {
+    opacity: 0.9;
+  }

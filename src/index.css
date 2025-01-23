@@ -30,6 +30,8 @@
 	--modal-text-color: #ffffff;
 	--button-color: #31d9e6;
 	--button-hover-color: #1fa2b3;
+	--button-color-2: #e63946;
+	--button-color-2-hover: #a83232;
 	scrollbar-width: thin;
 	scrollbar-color: var(--text-color) var(--secondary-background-color);
 }
