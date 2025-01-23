@@ -1,0 +1,119 @@
+.steps-container {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
+}
+
+.stepper-buttons {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+.stepper-buttons .offwhite {
+	display: inline-block;
+	padding: 0.75rem 1.25rem;
+	border-radius: 10rem;
+	color: #000;
+	text-transform: uppercase;
+	font-size: 1rem;
+	letter-spacing: 0.1rem;
+	transition: all 0.3s;
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
+	background-color: #f0f0f0;
+	border: none;
+	cursor: pointer;
+	font-family: inherit;
+}
+
+.stepper-buttons .offwhite::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #f0f0f0;
+	border-radius: 10rem;
+	z-index: -2;
+}
+
+.stepper-buttons .offwhite::before {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 0%;
+	height: 100%;
+	background-color: #dcdcdcb7;
+	transition: all 0.3s;
+	border-radius: 10rem;
+	z-index: -1;
+}
+
+.stepper-buttons .offwhite:hover {
+	color: #000;
+	transform: translateY(-2px); /* Move up by 2 pixels */
+}
+
+.stepper-buttons .offwhite:hover::before {
+	width: 100%;
+}
+
+.stepper-buttons .blue {
+	display: inline-block;
+	padding: 0.75rem 1.25rem;
+	border-radius: 10rem;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 14px;
+	letter-spacing: 0.1rem;
+	transition: all 0.3s;
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
+	background-color: var(--button-color);
+	border: none;
+	cursor: pointer;
+	font-family: inherit;
+}
+
+.stepper-buttons .blue::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--button-color);
+	border-radius: 10rem;
+	z-index: -2;
+}
+
+.stepper-buttons .blue::before {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 0%;
+	height: 100%;
+	background-color: var(--button-hover-color);
+	transition: all 0.3s;
+	border-radius: 10rem;
+	z-index: -1;
+}
+
+.stepper-buttons .blue:hover {
+	transform: translateY(-2px);
+}
+
+.stepper-buttons .blue:hover::before {
+	width: 100%;
+}
+
+.stepper-buttons .blue.nextButton {
+	margin-left: auto;
+}
