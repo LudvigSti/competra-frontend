@@ -91,8 +91,8 @@ const LoginPage = () => {
 							Remember me
 						</label>
 
-						<Link to="/forgotPassword" className="forgot-password-link">
-							Forgot password?
+						<Link to="/group/1" className="forgot-password-link">
+							Group route check
 						</Link>
 					</div>
 
