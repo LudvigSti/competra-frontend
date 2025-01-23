@@ -10,22 +10,6 @@
 		U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/*--placeholder-color: #b0b0b0;*/
-/*
-:root {
-  --background-color: #ffffff;
-  --text-color: #000000;
-  
-  --primary-background-color: #11252d;
-  --secondary-background-color: #f2fbfd;
-  --header-text-color: #030d11;
-  --container-background-color: #e1eef1;
-  --modal-text-color: #fafafa;
-  --button-color: #31d9e6;
-  scrollbar-width: thin;
-  scrollbar-color: var(--highlight-color) var(--secondary-background-color);
-}
-*/
 :root {
 	/* --background-color: #ffffff;
 	--text-color: #1f2a38;
@@ -48,19 +32,6 @@
 	--button-hover-color: #1fa2b3;
 	scrollbar-width: thin;
 	scrollbar-color: var(--text-color) var(--secondary-background-color);
-}
-
-[data-theme='christmas'] {
-	--background-color: #d32f2f;
-	--text-color: #000000;
-	--primary-background-color: #388e3c;
-	--secondary-background-color: #ffffff;
-	--header-text-color: #ffffff;
-	--container-background-color: #d32f2f;
-	--modal-text-color: #000000;
-	--button-color: #fbc02d;
-	scrollbar-width: thin;
-	scrollbar-color: var(--text-color) var(--primary-background-color);
 }
 
 [data-theme='dark'] {
