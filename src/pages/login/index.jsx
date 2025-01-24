@@ -4,7 +4,7 @@ import { FaRegEye } from 'react-icons/fa';
 import { FaRegEyeSlash } from 'react-icons/fa';
 // import Snackbar from '../../components/common/snackbar';
 // import useSnackbar from '../../hooks/useSnackbar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './style.css';
 
 const LoginPage = () => {
@@ -19,6 +19,8 @@ const LoginPage = () => {
 		const { name, value } = event.target;
 		setFormData({ ...formData, [name]: value });
 	};
+
+	const navigate = useNavigate();
 
 	// const handleLogin = async (event) => {
 	// 	event.preventDefault();
@@ -36,9 +38,11 @@ const LoginPage = () => {
 	// 	}
 	// };
 
-	const handleLogin = () => {
+	const handleLogin = (e) => {
+		e.preventDefault();
 		console.log('Login button clicked');
-		<Link to="/dashboard" />; // TODO: Raplce with actual login logic when backend is ready
+		navigate('/dashboard');
+		// TODO: Replace with actual login logic when backend is ready
 	};
 
 	return (
@@ -72,6 +76,7 @@ const LoginPage = () => {
 								placeholder="Enter your password"
 								required
 							/>
+
 							<button
 								type="button"
 								className="show-password-button"
@@ -91,8 +96,8 @@ const LoginPage = () => {
 							Remember me
 						</label>
 
-						<Link to="/group/1" className="forgot-password-link">
-							Group route check
+						<Link to="/" className="forgot-password-link">
+							Forgot password?
 						</Link>
 					</div>
 
