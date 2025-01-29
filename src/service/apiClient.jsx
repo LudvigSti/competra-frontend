@@ -8,6 +8,11 @@ async function logInUser(data){
     return res;
 }
 
+async function registerUser(data){
+    const res = await post('user/register', data);
+    return res;
+}
+
 // CRUD FUNCTIONS
 async function post(endpoint, data, auth = false) {
     return await request('POST', endpoint, data, auth);
@@ -58,5 +63,6 @@ async function post(endpoint, data, auth = false) {
   }
 
   export {
-    logInUser
+    logInUser,
+    registerUser
   }

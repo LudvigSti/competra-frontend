@@ -8,6 +8,7 @@ import Stepper from '../../components/registerPage';
 import ProfileImage from '../../components/common/profileImage';
 import { FaRegEye } from 'react-icons/fa';
 import { FaRegEyeSlash } from 'react-icons/fa';
+import useAuth from '../../hooks/useAuth';
 import './style.css';
 
 const RegisterPage = () => {
@@ -18,7 +19,7 @@ const RegisterPage = () => {
 		profileImage: '',
 	});
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	// const { onRegister } = useAuth();
+	const { onRegister } = useAuth();
 	// const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
 	const [showPassword, setShowPassword] = useState(false);
 	const [errors, setErrors] = useState({});
@@ -43,24 +44,23 @@ const RegisterPage = () => {
 		// if (!stepIsValid(0) || !stepIsValid(1)) {
 		// 	return;
 		// }
-		// setIsSubmitting(true);
-		// try {
-		// 	const payload = {
-		// 		username: formData.username,
-		// 		password: formData.password,
-		// 		email: formData.email,
-		// 		mobile: formData.mobile,
-		// 		profileImage: formData.profileImage,
-		// 	};
-		// 	await onRegister(payload);
-		// } catch (error) {
-		// 	console.error('Error during register:', error);
-		// 	showSnackbar('An error occurred. Please try again.', 'error');
-		// } finally {
-		// 	setIsSubmitting(false);
-		// }
-
-		console.log('Register button clicked' + JSON.stringify(formData));
+		setIsSubmitting(true);
+		try {
+			const payload = {
+				username: formData.username,
+				password: formData.password,
+				// email: formData.email,
+				// mobile: formData.mobile,
+				// profileImage: formData.profileImage,
+			};
+			
+			await onRegister(payload);
+		} catch (error) {
+			console.error('Error during register:', error);
+			// showSnackbar('An error occurred. Please try again.', 'error');
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 
 	// FIXME: Temporary validations, should be moved to service folder
