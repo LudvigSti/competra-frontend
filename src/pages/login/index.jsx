@@ -4,7 +4,8 @@ import { FaRegEye } from 'react-icons/fa';
 import { FaRegEyeSlash } from 'react-icons/fa';
 // import Snackbar from '../../components/common/snackbar';
 // import useSnackbar from '../../hooks/useSnackbar';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import   useAuth   from '../../hooks/useAuth';
 import './style.css';
 
 const LoginPage = () => {
@@ -12,7 +13,7 @@ const LoginPage = () => {
 	const [rememberMe, setRememberMe] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
-	// const { onLogin } = useAuth();
+	const { onLogin } = useAuth();
 	// const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
 
 	const onChange = (event) => {
@@ -20,30 +21,31 @@ const LoginPage = () => {
 		setFormData({ ...formData, [name]: value });
 	};
 
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 
-	// const handleLogin = async (event) => {
-	// 	event.preventDefault();
-	// 	if (!validateInputs()) return;
+	const handleLogin = async (event) => {
+	 	event.preventDefault();
+	 	// if (!validateInputs()) return;
 
-	// 	setIsSubmitting(true);
+	 	setIsSubmitting(true);
+		console.log(formData);
 
-	// 	try {
-	// 		await onLogin(formData);
-	// 	} catch (error) {
-	// 		console.error('Error during login:', error);
-	// 		showSnackbar('Invalid username or password.', 'error');
-	// 	} finally {
-	// 		setIsSubmitting(false);
-	// 	}
-	// };
-
-	const handleLogin = (e) => {
-		e.preventDefault();
-		console.log('Login button clicked');
-		navigate('/dashboard');
-		// TODO: Replace with actual login logic when backend is ready
+		try {
+			await onLogin(formData);
+		} catch (error) {
+			console.error('Error during login:', error);
+			// showSnackbar('Invalid username or password.', 'error');
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
+
+	// const handleLogin = (e) => {
+	// 	e.preventDefault();
+	// 	console.log('Login button clicked');
+	// 	navigate('/dashboard');
+	// 	// TODO: Replace with actual login logic when backend is ready
+	// };
 
 	return (
 		<div className="login-container">
