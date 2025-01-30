@@ -29,7 +29,8 @@ const LoginPage = () => {
 
 		setIsSubmitting(true);
 
-		console.log('Backend URL:', import.meta.env.VITE_BACKEND_URL);
+		console.log('VITE_BACKEND_URL:', import.meta.env.VITE_BACKEND_URL);
+		console.log('All ENV variables:', import.meta.env);
 
 		try {
 			await onLogin(formData);
