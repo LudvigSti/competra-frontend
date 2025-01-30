@@ -3,18 +3,21 @@ import './style.css';
 import { useEffect, useState } from 'react';
 import { getUserGroupByUserId } from '../../service/apiClient';
 import { jwtDecode } from 'jwt-decode';
+import { leaveGroup } from '../../service/apiClient';
+import { joinGroup } from '../../service/apiClient';
 
 const CompetraDashboard = () => {
 	const [userGroups, setUserGroups] = useState([]);
 
 	const decodedToken = jwtDecode(localStorage.getItem('token'));
+	const userIdFromToken = parseInt(decodedToken.sub, 10);
 
 	useEffect(() => {
 		fetchUserGroups();
 	}, []);
 
 	const fetchUserGroups = async () => {
-		const userGroups = await getUserGroupByUserId(parseInt(decodedToken.sub, 10));
+		const userGroups = await getUserGroupByUserId(userIdFromToken);
 		setUserGroups(userGroups);
 	}
 
@@ -26,12 +29,28 @@ const CompetraDashboard = () => {
 		navigate(`/group/${id}`);
 	}
 
-	const handleGroupLeave = (id) => {
+	const handleGroupLeave = async (groupId) => {
+		try {
+			await leaveGroup(userIdFromToken, groupId);
+			console.log("left group with id: ", groupId);
+			setUserGroups(prevGroups => prevGroups.filter(group => group.groupId !== groupId));	
+		} catch (error) {
+			console.error('Error leaving group:', error);
+		}
 		// FIXME: Replace with real endpoint when backend is done
-		console.log("left group with id: ", id);
+		
 	}
 
-	//const handleGroupJoin 
+	const handleGroupJoin = async (groupId) => {
+		try {
+		  const data = { userId: userIdFromToken, groupId };
+		  await joinGroup(data);
+		  console.log("joined group with id: ", groupId);
+		  setUserGroups(prevGroups => [...prevGroups, { groupId, groupName: 'New Group' }]); // Add the new group
+		} catch (error) {
+		  console.error("Error joining group:", error);
+		}
+	  };
 
 	return (
 		<div className="competra-dashboard">

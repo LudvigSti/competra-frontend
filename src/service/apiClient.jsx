@@ -1,6 +1,7 @@
 import { API_URL } from "./constants";
 
 // CUSTOM FUNCTIONS
+
 //USER
 
 async function logInUser(data){
@@ -13,8 +14,19 @@ async function registerUser(data){
     return res;
 }
 
+//USER GROUP
 async function getUserGroupByUserId(userId){
   const res = await get(`usergroup/${userId}/`);
+  return res;
+}
+
+async function joinGroup(data){
+  const res = await post('usergroup', data);
+  return res;
+}
+
+async function leaveGroup(userId, groupId){
+  const res = await del(`usergroup/${userId}/${groupId}`);
   return res;
 }
 
@@ -70,5 +82,7 @@ async function post(endpoint, data, auth = false) {
   export {
     logInUser,
     registerUser,
-    getUserGroupByUserId
+    getUserGroupByUserId,
+    joinGroup,
+    leaveGroup
   }
