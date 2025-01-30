@@ -5,7 +5,7 @@ import { FaRegEyeSlash } from 'react-icons/fa';
 // import Snackbar from '../../components/common/snackbar';
 // import useSnackbar from '../../hooks/useSnackbar';
 import { Link } from 'react-router-dom';
-import   useAuth   from '../../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 import './style.css';
 
 const LoginPage = () => {
@@ -24,10 +24,12 @@ const LoginPage = () => {
 	// const navigate = useNavigate();
 
 	const handleLogin = async (event) => {
-	 	event.preventDefault();
-	 	// if (!validateInputs()) return;
+		event.preventDefault();
+		// if (!validateInputs()) return;
 
-	 	setIsSubmitting(true);
+		setIsSubmitting(true);
+
+		console.log('Backend URL:', import.meta.env.VITE_BACKEND_URL);
 
 		try {
 			await onLogin(formData);
