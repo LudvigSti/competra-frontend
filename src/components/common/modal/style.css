@@ -1,0 +1,24 @@
+.modal-body {
+	display: grid;
+	grid-template-columns: auto;
+	grid-auto-rows: auto;
+	background-color: var(--secondary-background-color);
+}
+
+.modal-body p {
+	cursor: pointer;
+	color: var(--modal-text-color);
+}
+
+.modal-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.modal-content {
+	display: grid;
+	grid-template-columns: auto;
+	grid-auto-rows: auto;
+	row-gap: 20px;
+}
