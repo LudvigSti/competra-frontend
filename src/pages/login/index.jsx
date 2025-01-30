@@ -30,6 +30,7 @@ const LoginPage = () => {
 	const handleLogin = async (event) => {
 		event.preventDefault();
 		// if (!validateInputs()) return;
+		console.log("BACKEND URL: ", import.meta.env.VITE_BACKEND_URL);
 
 		setIsSubmitting(true);
 
