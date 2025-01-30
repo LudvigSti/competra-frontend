@@ -28,7 +28,6 @@ const LoginPage = () => {
 	 	// if (!validateInputs()) return;
 
 	 	setIsSubmitting(true);
-		console.log(formData);
 
 		try {
 			await onLogin(formData);

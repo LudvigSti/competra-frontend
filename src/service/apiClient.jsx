@@ -13,6 +13,11 @@ async function registerUser(data){
     return res;
 }
 
+async function getUserGroupByUserId(userId){
+  const res = await get(`usergroup/${userId}/`);
+  return res;
+}
+
 // CRUD FUNCTIONS
 async function post(endpoint, data, auth = false) {
     return await request('POST', endpoint, data, auth);
@@ -64,5 +69,6 @@ async function post(endpoint, data, auth = false) {
 
   export {
     logInUser,
-    registerUser
+    registerUser,
+    getUserGroupByUserId
   }

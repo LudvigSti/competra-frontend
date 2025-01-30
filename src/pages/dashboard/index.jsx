@@ -1,20 +1,37 @@
 import { useNavigate } from 'react-router-dom';
 import './style.css';
+import { useEffect, useState } from 'react';
+import { getUserGroupByUserId } from '../../service/apiClient';
+import { jwtDecode } from 'jwt-decode';
 
 const CompetraDashboard = () => {
-	// Fake data
-	const yourGroups = [
-		{ name: 'Experis Academy', action: 'LEAVE' },
-		{ name: 'Benkvarmere', action: 'LEAVE' },
-	];
+	const [userGroups, setUserGroups] = useState([]);
+
+	const decodedToken = jwtDecode(localStorage.getItem('token'));
+
+	useEffect(() => {
+		fetchUserGroups();
+	}, []);
+
+	const fetchUserGroups = async () => {
+		const userGroups = await getUserGroupByUserId(parseInt(decodedToken.sub, 10));
+		setUserGroups(userGroups);
+	}
 
 	const activeGroups = [{ name: 'Experis Salgsteam', action: 'JOIN' }];
 
-	// TODO: Delete after standup
 	const navigate = useNavigate();
-	const standupRouting = () => {
-		navigate('/group/1');
-	};
+
+	const handleGroupClick = (id) => {
+		navigate(`/group/${id}`);
+	}
+
+	const handleGroupLeave = (id) => {
+		// FIXME: Replace with real endpoint when backend is done
+		console.log("left group with id: ", id);
+	}
+
+	//const handleGroupJoin 
 
 	return (
 		<div className="competra-dashboard">
@@ -24,12 +41,13 @@ const CompetraDashboard = () => {
 			<div className="group-section">
 				<h2>Your Groups</h2>
 				<ul>
-					{yourGroups.map((group, index) => (
+					{userGroups.map((group, index) => (
 						<li key={index} className="group-item">
-							<span className="group-name" onClick={standupRouting}>
-								{group.name}
+							<span className="group-name" onClick={() => handleGroupClick(group.groupId)}>
+								{group.groupName}
 							</span>
-							<button className="group-action leave">{group.action}</button>
+
+							<button className="group-action leave" onClick={() => handleGroupLeave(group.groupId)}>LEAVE</button>
 						</li>
 					))}
 				</ul>
