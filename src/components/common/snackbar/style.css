@@ -1,0 +1,52 @@
+.snackbar {
+	position: fixed;
+	bottom: 25px;
+	left: 50%;
+	transform: translateX(-50%) scale(0.9);
+	padding: 16px;
+	border-radius: 4px;
+	color: white;
+	font-size: 16px;
+	z-index: 1000;
+	opacity: 0;
+	animation: fadeInZoom 300ms ease-in-out forwards,
+		fadeOutZoom 300ms ease-in-out 2700ms forwards;
+}
+
+.snackbar.success {
+	background-color: #4caf50;
+}
+
+.snackbar.error {
+	background-color: #f44336;
+}
+
+.snackbar.info {
+	background-color: #2196f3;
+}
+
+.snackbar.warning {
+	background-color: #ff9800;
+}
+
+@keyframes fadeInZoom {
+	0% {
+		opacity: 0;
+		transform: translateX(-50%) scale(0.9);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(-50%) scale(1);
+	}
+}
+
+@keyframes fadeOutZoom {
+	0% {
+		opacity: 1;
+		transform: translateX(-50%) scale(1);
+	}
+	100% {
+		opacity: 0;
+		transform: translateX(-50%) scale(0.9);
+	}
+}
