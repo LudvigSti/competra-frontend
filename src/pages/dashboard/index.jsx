@@ -1,19 +1,24 @@
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import { useEffect, useState } from 'react';
-import { getUserGroupByUserId } from '../../service/apiClient';
+import { getActiveGroups, getUserGroupByUserId } from '../../service/apiClient';
 import { jwtDecode } from 'jwt-decode';
 import { leaveGroup } from '../../service/apiClient';
 import { joinGroup } from '../../service/apiClient';
+import Snackbar from '../../components/common/snackbar';
+import useSnackbar from '../../hooks/useSnackbar';
 
 const CompetraDashboard = () => {
 	const [userGroups, setUserGroups] = useState([]);
+	const [activeGroups, setActiveGroups] = useState([]);
 
 	const decodedToken = jwtDecode(localStorage.getItem('token'));
 	const userIdFromToken = parseInt(decodedToken.sub, 10);
+	const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
 
 	useEffect(() => {
 		fetchUserGroups();
+		fetchActiveGroups();
 	}, []);
 
 	const fetchUserGroups = async () => {
@@ -21,7 +26,16 @@ const CompetraDashboard = () => {
 		setUserGroups(userGroups);
 	}
 
-	const activeGroups = [{ name: 'Experis Salgsteam', action: 'JOIN' }];
+	const fetchActiveGroups = async () => {
+		try {
+			const activeGroups = await getActiveGroups(userIdFromToken);
+			setActiveGroups(activeGroups);
+		} catch (error) {
+			console.error('Error fetching active groups:', error);
+		}
+	}
+
+	// const activeGroups = [{ name: 'Experis Salgsteam', action: 'JOIN' }];
 
 	const navigate = useNavigate();
 
@@ -32,8 +46,10 @@ const CompetraDashboard = () => {
 	const handleGroupLeave = async (groupId) => {
 		try {
 			await leaveGroup(userIdFromToken, groupId);
+			showSnackbar('You have left the group.', 'success');
 			console.log("left group with id: ", groupId);
 			setUserGroups(prevGroups => prevGroups.filter(group => group.groupId !== groupId));	
+			fetchActiveGroups();
 		} catch (error) {
 			console.error('Error leaving group:', error);
 		}
@@ -46,7 +62,8 @@ const CompetraDashboard = () => {
 		  const data = { userId: userIdFromToken, groupId };
 		  await joinGroup(data);
 		  console.log("joined group with id: ", groupId);
-		  setUserGroups(prevGroups => [...prevGroups, { groupId, groupName: 'New Group' }]); // Add the new group
+		  fetchUserGroups();
+		  fetchActiveGroups();
 		} catch (error) {
 		  console.error("Error joining group:", error);
 		}
@@ -78,12 +95,22 @@ const CompetraDashboard = () => {
 				<ul>
 					{activeGroups.map((group, index) => (
 						<li key={index} className="group-item">
-							<span className="group-name">{group.name}</span>
-							<button className="group-action join">{group.action}</button>
+							<span className="group-name" onClick={() => handleGroupClick(group.groupId)}>
+							{group.groupName}
+							</span>
+							<button className="group-action join" onClick={() => handleGroupJoin(group.groupId)}>JOIN</button>
 						</li>
 					))}
 				</ul>
 			</div>
+
+			{snackbar.isOpen && (
+				<Snackbar
+					message={snackbar.message}
+					type={snackbar.type}
+					onClose={closeSnackbar}
+				/>
+			)}
 		</div>
 	);
 };

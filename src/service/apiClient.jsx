@@ -30,6 +30,13 @@ async function leaveGroup(userId, groupId){
   return res;
 }
 
+//GROUP
+
+async function getActiveGroups(userId){
+  const res = await get(`group/${userId}`);
+  return res;
+}
+
 // CRUD FUNCTIONS
 async function post(endpoint, data, auth = false) {
     return await request('POST', endpoint, data, auth);
@@ -84,5 +91,6 @@ async function post(endpoint, data, auth = false) {
     registerUser,
     getUserGroupByUserId,
     joinGroup,
-    leaveGroup
+    leaveGroup,
+    getActiveGroups
   }
