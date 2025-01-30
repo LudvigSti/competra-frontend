@@ -10,8 +10,12 @@ const Modal = ({ width = '612px' }) => {
 	const { isOpen, closeModal, modalComponent, modalHeader } = useModal();
 
 	style.content.width = width;
+	// FIXME: If you have lightmode/darkmode uncomment this
+	// style.content.backgroundColor =
+	// 	localStorage.getItem('theme') === 'dark' ? '#061b23' : '#e4e5f1';
+
 	style.content.backgroundColor =
-		localStorage.getItem('theme') === 'dark' ? '#061b23' : '#e4e5f1';
+	localStorage.getItem('theme') === 'dark' ? '#061b23' : '#061b23';
 
 	return (
 		<ReactModal
