@@ -2,7 +2,7 @@ import { createContext, useEffect, useState, useContext } from 'react';
 // import { jwtDecode } from 'jwt-decode';
 import { useNavigate, Navigate, useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
-import { logInUser } from '../service/apiClient';
+import { logInUser, registerUser } from '../service/apiClient';
 
 const AuthContext = createContext();
 
@@ -68,30 +68,30 @@ const AuthProvider = ({ children }) => {
 //     navigate('/');
 //   };
 
-//   const handleRegister = async (data) => {
-//     const res = await registerUserAsync(data);
+  const handleRegister = async (data) => {
+    const res = await registerUser(data);
+    
+    if (!res.token) {
+      return navigate('/register');
+    }
 
-//     if (!res.token) {
-//       return navigate('/register');
-//     }
+    localStorage.setItem('token', res.token);
+    setToken(res.token);
 
-//     localStorage.setItem('token', res.token);
-//     setToken(res.token);
+    // const user = await getUserByIdAsync(jwtDecode(res.token).UserId);
+    // localStorage.setItem('loggedInUser', JSON.stringify(user));
+    // setLoggedInUser(user);
 
-//     const user = await getUserByIdAsync(jwtDecode(res.token).UserId);
-//     localStorage.setItem('loggedInUser', JSON.stringify(user));
-//     setLoggedInUser(user);
-
-//     localStorage.setItem('redirectPath', '/dashboard');
-//     navigate('/dashboard');
-//   };
+    localStorage.setItem('redirectPath', '/dashboard');
+    navigate('/dashboard');
+  };
 
   const value = {
     token,
     loggedInUser,
     onLogin: handleLogin,
     // onLogout: handleLogout,
-    // onRegister: handleRegister
+    onRegister: handleRegister
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
