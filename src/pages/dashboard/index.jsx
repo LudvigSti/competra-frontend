@@ -7,13 +7,12 @@ import { leaveGroup } from '../../service/apiClient';
 import { joinGroup } from '../../service/apiClient';
 import Snackbar from '../../components/common/snackbar';
 import useSnackbar from '../../hooks/useSnackbar';
+import useAuth from '../../hooks/useAuth';
 
 const CompetraDashboard = () => {
 	const [userGroups, setUserGroups] = useState([]);
 	const [activeGroups, setActiveGroups] = useState([]);
-
-	const decodedToken = jwtDecode(localStorage.getItem('token'));
-	const userIdFromToken = parseInt(decodedToken.sub, 10);
+	const { loggedInUserId } = useAuth();	
 	const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
 
 	useEffect(() => {
@@ -22,13 +21,13 @@ const CompetraDashboard = () => {
 	}, []);
 
 	const fetchUserGroups = async () => {
-		const userGroups = await getUserGroupByUserId(userIdFromToken);
+		const userGroups = await getUserGroupByUserId(loggedInUserId);
 		setUserGroups(userGroups);
 	}
 
 	const fetchActiveGroups = async () => {
 		try {
-			const activeGroups = await getActiveGroups(userIdFromToken);
+			const activeGroups = await getActiveGroups(loggedInUserId);
 			setActiveGroups(activeGroups);
 		} catch (error) {
 			console.error('Error fetching active groups:', error);
@@ -45,7 +44,7 @@ const CompetraDashboard = () => {
 
 	const handleGroupLeave = async (groupId) => {
 		try {
-			await leaveGroup(userIdFromToken, groupId);
+			await leaveGroup(loggedInUserId, groupId);
 			showSnackbar('You have left the group.', 'success');
 			console.log("left group with id: ", groupId);
 			setUserGroups(prevGroups => prevGroups.filter(group => group.groupId !== groupId));	
@@ -59,7 +58,7 @@ const CompetraDashboard = () => {
 
 	const handleGroupJoin = async (groupId) => {
 		try {
-		  const data = { userId: userIdFromToken, groupId };
+		  const data = { userId: loggedInUserId, groupId };
 		  await joinGroup(data);
 		  console.log("joined group with id: ", groupId);
 		  fetchUserGroups();
