@@ -18,6 +18,16 @@ async function getUserGroupByUserId(userId){
   return res;
 }
 
+async function getAllUserActivities(){
+  const res = await get('useractivity/');
+  return res;
+}
+
+async function getAllUsers(){
+  const res = await get('user/');
+  return res;
+}
+
 // CRUD FUNCTIONS
 async function post(endpoint, data, auth = false) {
     return await request('POST', endpoint, data, auth);
@@ -70,5 +80,7 @@ async function post(endpoint, data, auth = false) {
   export {
     logInUser,
     registerUser,
-    getUserGroupByUserId
+    getUserGroupByUserId,
+    getAllUserActivities,
+    getAllUsers
   }

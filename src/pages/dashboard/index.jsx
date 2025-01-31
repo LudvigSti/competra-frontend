@@ -3,6 +3,7 @@ import './style.css';
 import { useEffect, useState } from 'react';
 import { getUserGroupByUserId } from '../../service/apiClient';
 import { jwtDecode } from 'jwt-decode';
+import PhoneNavbar from '../../components/common/navbar/Navbar';
 
 const CompetraDashboard = () => {
 	const [userGroups, setUserGroups] = useState([]);
@@ -65,6 +66,7 @@ const CompetraDashboard = () => {
 					))}
 				</ul>
 			</div>
+			<PhoneNavbar />
 		</div>
 	);
 };
