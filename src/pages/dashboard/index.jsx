@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import './style.css';
 import { useEffect, useState } from 'react';
 import { getActiveGroups, getUserGroupByUserId } from '../../service/apiClient';
-import { jwtDecode } from 'jwt-decode';
 import { leaveGroup } from '../../service/apiClient';
 import { joinGroup } from '../../service/apiClient';
 import Snackbar from '../../components/common/snackbar';
@@ -61,13 +60,14 @@ const CompetraDashboard = () => {
 		try {
 		  const data = { userId: loggedInUserId, groupId };
 		  await joinGroup(data);
+		  showSnackbar("You have joined the group.", "success");
 		  console.log("joined group with id: ", groupId);
-		  fetchUserGroups();
-		  fetchActiveGroups();
+		  setUserGroups(prevGroups => [...prevGroups, { groupId, groupName: "New Group" }]);
+		  setActiveGroups(prevGroups => prevGroups.filter(group => group.groupId !== groupId));
 		} catch (error) {
-		  console.error("Error joining group:", error);
+			console.error("Error joining group:", error);
 		}
-	  };
+	}
 
 	return (
 		<div className="competra-dashboard">
