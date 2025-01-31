@@ -20,6 +20,11 @@ const AuthProvider = ({ children }) => {
 			setToken(storedToken);
 		}
 
+		if (storedToken) {
+			const decodedToken = jwtDecode(storedToken);
+			setLoggedInUserId(parseInt(decodedToken.sub, 10));
+		}
+
 		// if (storedUser) {
 		// 	setLoggedInUser(JSON.parse(storedUser));
 		// }
@@ -53,7 +58,7 @@ const AuthProvider = ({ children }) => {
 		// localStorage.setItem('loggedInUser', JSON.stringify(user));
 		// setLoggedInUser(user);
 
-		const decodedToken = jwtDecode(res.token);
+		const decodedToken = jwtDecode(token);
 		setLoggedInUserId(parseInt(decodedToken.sub, 10));
 
 		localStorage.setItem('redirectPath', '/dashboard');
