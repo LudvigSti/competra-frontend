@@ -27,6 +27,9 @@ async function getAllUserActivities(){
 
 async function getAllUsers(){
   const res = await get('user/');
+  return res;
+}
+
 async function joinGroup(data){
   const res = await post('usergroup', data);
   return res;
@@ -41,6 +44,11 @@ async function leaveGroup(userId, groupId){
 
 async function getActiveGroups(userId){
   const res = await get(`group/${userId}`);
+  return res;
+}
+
+async function createMatch(data){
+  const res = await post('match', data);
   return res;
 }
 
@@ -92,7 +100,7 @@ async function post(endpoint, data, auth = false) {
     const text = await response.text();
     return text ? JSON.parse(text) : {};
   }
-}
+
 export {
   logInUser,
   registerUser,
@@ -101,5 +109,6 @@ export {
   getAllUsers,
   joinGroup,
   leaveGroup,
-  getActiveGroups
+  getActiveGroups,
+  createMatch
 }

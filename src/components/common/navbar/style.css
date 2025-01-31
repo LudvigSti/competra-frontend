@@ -1,0 +1,22 @@
+.phone-navbar {
+    position: central;
+    bottom: 0;
+    background-color: #333;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .phone-navbar a {
+    color: white;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  
+  .phone-navbar a:hover {
+    background-color: #575757;
+    border-radius: 5px;
+  }
