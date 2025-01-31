@@ -62,12 +62,17 @@ const CompetraDashboard = () => {
 		  await joinGroup(data);
 		  showSnackbar("You have joined the group.", "success");
 		  console.log("joined group with id: ", groupId);
-		  setUserGroups(prevGroups => [...prevGroups, { groupId, groupName: "New Group" }]);
+		  fetchUserGroups();
 		  setActiveGroups(prevGroups => prevGroups.filter(group => group.groupId !== groupId));
 		} catch (error) {
 			console.error("Error joining group:", error);
 		}
 	}
+
+	useEffect(() => {
+		console.log("userGroups: ", userGroups);
+		console.log("activeGroups: ", activeGroups);
+	}, [userGroups, activeGroups]);
 
 	return (
 		<div className="competra-dashboard">
