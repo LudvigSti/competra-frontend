@@ -17,17 +17,15 @@ const CompetraDashboard = () => {
 	const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
 
 	const fetchUserGroups = async () => {
+		console.log('fetching user groups: ' + loggedInUserId);
 		const userGroups = await getUserGroupByUserId(loggedInUserId);
 		setUserGroups(userGroups);
 	};
 
 	const fetchActiveGroups = async () => {
-		try {
-			const activeGroups = await getActiveGroups(loggedInUserId);
-			setActiveGroups(activeGroups);
-		} catch (error) {
-			console.error('Error fetching active groups:', error);
-		}
+		console.log('fetching active groups: ' + loggedInUserId);
+		const activeGroups = await getActiveGroups(loggedInUserId);
+		setActiveGroups(activeGroups);
 	};
 
 	useEffect(() => {
@@ -107,12 +105,12 @@ const CompetraDashboard = () => {
 						<li key={index} className="group-item">
 							<span
 								className="group-name"
-								onClick={() => handleGroupClick(group.groupId)}>
+								onClick={() => handleGroupClick(group.id)}>
 								{group.groupName}
 							</span>
 							<button
 								className="group-action join"
-								onClick={() => handleGroupJoin(group.groupId)}>
+								onClick={() => handleGroupJoin(group.id)}>
 								JOIN
 							</button>
 						</li>
