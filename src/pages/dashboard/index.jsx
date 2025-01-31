@@ -10,18 +10,11 @@ import useAuth from '../../hooks/useAuth';
 import PhoneNavbar from '../../components/common/navbar/Navbar';
 
 const CompetraDashboard = () => {
+	const navigate = useNavigate();
 	const [userGroups, setUserGroups] = useState([]);
 	const [activeGroups, setActiveGroups] = useState([]);
 	const { loggedInUserId } = useAuth();
 	const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		if (loggedInUserId) {
-			fetchUserGroups();
-			fetchActiveGroups();
-		}
-	}, [loggedInUserId]);
 
 	const fetchUserGroups = async () => {
 		const userGroups = await getUserGroupByUserId(loggedInUserId);
@@ -37,7 +30,10 @@ const CompetraDashboard = () => {
 		}
 	};
 
-	// const activeGroups = [{ name: 'Experis Salgsteam', action: 'JOIN' }];
+	useEffect(() => {
+		fetchUserGroups();
+		fetchActiveGroups();
+	}, []);
 
 	const handleGroupClick = (id) => {
 		navigate(`/group/${id}`);
@@ -55,25 +51,26 @@ const CompetraDashboard = () => {
 		} catch (error) {
 			console.error('Error leaving group:', error);
 		}
-		// FIXME: Replace with real endpoint when backend is done
 	};
 
 	const handleGroupJoin = async (groupId) => {
 		try {
-		  const data = { userId: loggedInUserId, groupId };
-		  await joinGroup(data);
-		  showSnackbar("You have joined the group.", "success");
-		  console.log("joined group with id: ", groupId);
-		  fetchUserGroups();
-		  setActiveGroups(prevGroups => prevGroups.filter(group => group.groupId !== groupId));
+			const data = { userId: loggedInUserId, groupId };
+			await joinGroup(data);
+			showSnackbar('You have joined the group.', 'success');
+			console.log('joined group with id: ', groupId);
+			fetchUserGroups();
+			setActiveGroups((prevGroups) =>
+				prevGroups.filter((group) => group.groupId !== groupId)
+			);
 		} catch (error) {
-			console.error("Error joining group:", error);
+			console.error('Error joining group:', error);
 		}
-	}
+	};
 
 	useEffect(() => {
-		console.log("userGroups: ", userGroups);
-		console.log("activeGroups: ", activeGroups);
+		console.log('userGroups: ', userGroups);
+		console.log('activeGroups: ', activeGroups);
 	}, [userGroups, activeGroups]);
 
 	return (
