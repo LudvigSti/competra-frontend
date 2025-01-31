@@ -43,7 +43,7 @@ async function leaveGroup(userId, groupId){
 //GROUP
 
 async function getActiveGroups(userId){
-  const res = await get(`group/${userId}`);
+  const res = await get(`group/unjoined/${userId}`);
   return res;
 }
 
