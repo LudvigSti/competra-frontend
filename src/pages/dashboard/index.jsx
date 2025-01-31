@@ -10,68 +10,65 @@ import useAuth from '../../hooks/useAuth';
 import PhoneNavbar from '../../components/common/navbar/Navbar';
 
 const CompetraDashboard = () => {
+	const navigate = useNavigate();
 	const [userGroups, setUserGroups] = useState([]);
 	const [activeGroups, setActiveGroups] = useState([]);
-	const { loggedInUserId } = useAuth();	
+	const { loggedInUserId } = useAuth();
 	const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
+
+	const fetchUserGroups = async () => {
+		console.log('fetching user groups: ' + loggedInUserId);
+		const userGroups = await getUserGroupByUserId(loggedInUserId);
+		setUserGroups(userGroups);
+	};
+
+	const fetchActiveGroups = async () => {
+		console.log('fetching active groups: ' + loggedInUserId);
+		const activeGroups = await getActiveGroups(loggedInUserId);
+		setActiveGroups(activeGroups);
+	};
 
 	useEffect(() => {
 		fetchUserGroups();
 		fetchActiveGroups();
 	}, []);
 
-	const fetchUserGroups = async () => {
-		const userGroups = await getUserGroupByUserId(loggedInUserId);
-		setUserGroups(userGroups);
-	}
-
-	const fetchActiveGroups = async () => {
-		try {
-			const activeGroups = await getActiveGroups(loggedInUserId);
-			setActiveGroups(activeGroups);
-		} catch (error) {
-			console.error('Error fetching active groups:', error);
-		}
-	}
-
-	// const activeGroups = [{ name: 'Experis Salgsteam', action: 'JOIN' }];
-
-	const navigate = useNavigate();
-
 	const handleGroupClick = (id) => {
 		navigate(`/group/${id}`);
-	}
+	};
 
 	const handleGroupLeave = async (groupId) => {
 		try {
 			await leaveGroup(loggedInUserId, groupId);
 			showSnackbar('You have left the group.', 'success');
-			console.log("left group with id: ", groupId);
-			setUserGroups(prevGroups => prevGroups.filter(group => group.groupId !== groupId));	
+			console.log('left group with id: ', groupId);
+			setUserGroups((prevGroups) =>
+				prevGroups.filter((group) => group.groupId !== groupId)
+			);
 			fetchActiveGroups();
 		} catch (error) {
 			console.error('Error leaving group:', error);
 		}
-		// FIXME: Replace with real endpoint when backend is done
-		
-	}
+	};
 
 	const handleGroupJoin = async (groupId) => {
 		try {
-		  const data = { userId: loggedInUserId, groupId };
-		  await joinGroup(data);
-		  showSnackbar("You have joined the group.", "success");
-		  console.log("joined group with id: ", groupId);
-		  fetchUserGroups();
-		  setActiveGroups(prevGroups => prevGroups.filter(group => group.groupId !== groupId));
+			const data = { userId: loggedInUserId, groupId };
+			await joinGroup(data);
+			showSnackbar('You have joined the group.', 'success');
+			console.log('joined group with id: ', groupId);
+			fetchUserGroups();
+			setActiveGroups((prevGroups) =>
+				prevGroups.filter((group) => group.groupId !== groupId)
+			);
 		} catch (error) {
-			console.error("Error joining group:", error);
+			console.error('Error joining group:', error);
 		}
-	}
+	};
 
 	useEffect(() => {
-		console.log("userGroups: ", userGroups);
-		console.log("activeGroups: ", activeGroups);
+		console.log('userGroups: ', userGroups);
+		console.log('activeGroups: ', activeGroups);
 	}, [userGroups, activeGroups]);
 
 	return (
@@ -84,11 +81,17 @@ const CompetraDashboard = () => {
 				<ul>
 					{userGroups.map((group, index) => (
 						<li key={index} className="group-item">
-							<span className="group-name" onClick={() => handleGroupClick(group.groupId)}>
+							<span
+								className="group-name"
+								onClick={() => handleGroupClick(group.groupId)}>
 								{group.groupName}
 							</span>
 
-							<button className="group-action leave" onClick={() => handleGroupLeave(group.groupId)}>LEAVE</button>
+							<button
+								className="group-action leave"
+								onClick={() => handleGroupLeave(group.groupId)}>
+								LEAVE
+							</button>
 						</li>
 					))}
 				</ul>
@@ -100,10 +103,16 @@ const CompetraDashboard = () => {
 				<ul>
 					{activeGroups.map((group, index) => (
 						<li key={index} className="group-item">
-							<span className="group-name" onClick={() => handleGroupClick(group.groupId)}>
-							{group.groupName}
+							<span
+								className="group-name"
+								onClick={() => handleGroupClick(group.id)}>
+								{group.groupName}
 							</span>
-							<button className="group-action join" onClick={() => handleGroupJoin(group.groupId)}>JOIN</button>
+							<button
+								className="group-action join"
+								onClick={() => handleGroupJoin(group.id)}>
+								JOIN
+							</button>
 						</li>
 					))}
 				</ul>
