@@ -52,6 +52,11 @@ async function createMatch(data) {
 	return res;
 }
 
+async function getGroupByGroupId(groupId) {
+	const res = await get(`group/${groupId}`);
+	return res;
+}
+
 // ACTIVITIES
 async function getLeaderboardByActivityId(activityId) {
 	const res = await get(`activity/leaderboard/${activityId}`);
@@ -60,6 +65,16 @@ async function getLeaderboardByActivityId(activityId) {
 
 async function getActivitiesByGroupId(groupId) {
 	const res = await get(`activity/${groupId}`);
+	return res;
+}
+
+async function checkIfUserIsInActivity(activityId, userId) {
+	const res = await get(`UserActivity/${activityId}/${userId}`);
+	return res;
+}
+
+async function joinUserActivity(data) {
+	const res = await post('useractivity', data);
 	return res;
 }
 
@@ -129,4 +144,7 @@ export {
 	getActivitiesByGroupId,
 	getLeaderboardByActivityId,
 	createMatch,
+	checkIfUserIsInActivity,
+	joinUserActivity,
+	getGroupByGroupId,
 };

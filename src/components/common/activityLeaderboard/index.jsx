@@ -1,18 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
-import { getLeaderboardByActivityId } from '../../../service/apiClient';
 
-export default function ActivityLeaderboard({ activityId }) {
-	const [leaderboard, setLeaderboard] = useState([]);
+export default function ActivityLeaderboard({ leaderboard }) {
+	const [currentLeaderboard, setCurrentLeaderboard] = useState([]);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			const data = await getLeaderboardByActivityId(activityId);
-			setLeaderboard(data);
-		};
-
-		fetchData();
-	}, [activityId]);
+		setCurrentLeaderboard(leaderboard);
+	}, [leaderboard]);
 
 	if (!leaderboard) {
 		return <p>Loading...</p>;
@@ -22,7 +16,7 @@ export default function ActivityLeaderboard({ activityId }) {
 		<>
 			<h4>Leaderboard</h4>
 			<ul>
-				{leaderboard.map((leader, index) => (
+				{currentLeaderboard.map((leader, index) => (
 					<li key={index}>
 						{index + 1}. {leader.userName} - {leader.elo}
 					</li>
