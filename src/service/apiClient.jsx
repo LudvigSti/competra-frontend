@@ -42,6 +42,12 @@ async function getActivitiesByGroupId(groupId) {
 	return res;
 }
 
+// ACTIVITIES
+async function getLeaderboardByActivityId(activityId) {
+	const res = await get(`activity/leaderboard/${activityId}`);
+	return res;
+}
+
 // CRUD FUNCTIONS
 async function post(endpoint, data, auth = false) {
 	return await request('POST', endpoint, data, auth);
@@ -104,4 +110,5 @@ export {
 	leaveGroup,
 	getActiveGroups,
 	getActivitiesByGroupId,
+	getLeaderboardByActivityId,
 };

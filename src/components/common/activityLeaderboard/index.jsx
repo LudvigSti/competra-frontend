@@ -1,18 +1,20 @@
 /* eslint-disable react/prop-types */
-import { useEffect } from 'react';
-import { mockGroupData } from '../../../service/mockData';
+import { useEffect, useState } from 'react';
+import { getLeaderboardByActivityId } from '../../../service/apiClient';
 
 export default function ActivityLeaderboard({ activityId }) {
-	const activity = mockGroupData.activities.find(
-		(act) => act.id === activityId
-	);
+	const [leaderboard, setLeaderboard] = useState([]);
 
 	useEffect(() => {
-		// Fetch leaderboard data from API if needed
-		console.log(activityId);
+		const fetchData = async () => {
+			const data = await getLeaderboardByActivityId(activityId);
+			setLeaderboard(data);
+		};
+
+		fetchData();
 	}, [activityId]);
 
-	if (!activity) {
+	if (!leaderboard) {
 		return <p>Loading...</p>;
 	}
 
@@ -20,9 +22,9 @@ export default function ActivityLeaderboard({ activityId }) {
 		<>
 			<h4>Leaderboard</h4>
 			<ul>
-				{activity.leaderboard.map((leader, index) => (
+				{leaderboard.map((leader, index) => (
 					<li key={index}>
-						{index + 1}. {leader.name} - {leader.elo}
+						{index + 1}. {leader.userName} - {leader.elo}
 					</li>
 				))}
 			</ul>

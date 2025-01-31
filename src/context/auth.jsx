@@ -1,8 +1,8 @@
-import { createContext, useEffect, useState, useContext } from 'react';
-// import { jwtDecode } from 'jwt-decode';
+/* eslint-disable react/prop-types */
+import { createContext, useEffect, useState } from 'react';
 import { useNavigate, Navigate, useLocation } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
 import { logInUser, registerUser } from '../service/apiClient';
+import useAuth from '../hooks/useAuth';
 import { jwtDecode } from 'jwt-decode';
 
 const AuthContext = createContext();
@@ -14,20 +14,15 @@ const AuthProvider = ({ children }) => {
 
 	useEffect(() => {
 		const storedToken = localStorage.getItem('token');
-		// const storedUser = localStorage.getItem('loggedInUser');
+		const storedUserId = localStorage.getItem('loggedInUserId');
 
 		if (storedToken) {
 			setToken(storedToken);
 		}
 
-		if (storedToken) {
-			const decodedToken = jwtDecode(storedToken);
-			setLoggedInUserId(parseInt(decodedToken.sub, 10));
+		if (storedUserId) {
+			setLoggedInUserId(parseInt(storedUserId, 10));
 		}
-
-		// if (storedUser) {
-		// 	setLoggedInUser(JSON.parse(storedUser));
-		// }
 	}, []);
 
 	useEffect(() => {
@@ -37,12 +32,9 @@ const AuthProvider = ({ children }) => {
 			if (redirectPath) {
 				localStorage.removeItem('redirectPath');
 				navigate(redirectPath);
-			} else {
-				localStorage.setItem('redirectPath', '/');
-				navigate('/');
 			}
 		}
-	}, [token]);
+	}, [token, navigate]);
 
 	const handleLogin = async (data) => {
 		const res = await logInUser(data);
@@ -54,28 +46,15 @@ const AuthProvider = ({ children }) => {
 		localStorage.setItem('token', res.token);
 		setToken(res.token);
 
-		// const user = await getUserByIdAsync(jwtDecode(res.token).UserId);
-		// localStorage.setItem('loggedInUser', JSON.stringify(user));
-		// setLoggedInUser(user);
-
-		const decodedToken = jwtDecode(token);
-		setLoggedInUserId(parseInt(decodedToken.sub, 10));
+		const decodedToken = jwtDecode(res.token);
+		const userId = parseInt(decodedToken.sub, 10);
+		setLoggedInUserId(userId);
+		localStorage.setItem('loggedInUserId', userId);
 
 		localStorage.setItem('redirectPath', '/dashboard');
 
 		navigate('/dashboard');
 	};
-
-	//  const handleLogout = () => {
-	//     localStorage.removeItem('token');
-	//     localStorage.removeItem('loggedInUser');
-
-	//     setToken(null);
-	//     setLoggedInUser(null);
-
-	//     localStorage.setItem('redirectPath', '/');
-	//     navigate('/');
-	//   };
 
 	const handleRegister = async (data) => {
 		const res = await registerUser(data);
@@ -87,9 +66,10 @@ const AuthProvider = ({ children }) => {
 		localStorage.setItem('token', res.token);
 		setToken(res.token);
 
-		// const user = await getUserByIdAsync(jwtDecode(res.token).UserId);
-		// localStorage.setItem('loggedInUser', JSON.stringify(user));
-		// setLoggedInUser(user);
+		const decodedToken = jwtDecode(res.token);
+		const userId = parseInt(decodedToken.sub, 10);
+		setLoggedInUserId(userId);
+		localStorage.setItem('loggedInUserId', userId);
 
 		localStorage.setItem('redirectPath', '/dashboard');
 		navigate('/dashboard');
@@ -99,7 +79,6 @@ const AuthProvider = ({ children }) => {
 		token,
 		loggedInUserId,
 		onLogin: handleLogin,
-		// onLogout: handleLogout,
 		onRegister: handleRegister,
 	};
 
