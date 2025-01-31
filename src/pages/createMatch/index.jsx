@@ -34,7 +34,7 @@ const CreateMatch = () => {
   const fetchActivityUsers = async (activityId) => {
     try {
       const allActivities = await getAllUserActivities();
-      const users = allActivities.filter(activity => activity.activityId === Number(activityId));
+      const users = allActivities.filter(activity => activity.activityId === Number(activityId) && activity.userId !== loggedInUserId);
       setActivityUsers(users);
     } catch (error) {
       console.error('Error fetching users:', error);
