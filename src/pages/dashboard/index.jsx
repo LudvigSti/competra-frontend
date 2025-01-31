@@ -7,6 +7,7 @@ import { joinGroup } from '../../service/apiClient';
 import Snackbar from '../../components/common/snackbar';
 import useSnackbar from '../../hooks/useSnackbar';
 import useAuth from '../../hooks/useAuth';
+import PhoneNavbar from '../../components/common/navbar/Navbar';
 
 const CompetraDashboard = () => {
 	const [userGroups, setUserGroups] = useState([]);
@@ -59,15 +60,21 @@ const CompetraDashboard = () => {
 
 	const handleGroupJoin = async (groupId) => {
 		try {
-			const data = { userId: loggedInUserId, groupId };
-			await joinGroup(data);
-			console.log('joined group with id: ', groupId);
-			fetchUserGroups();
-			fetchActiveGroups();
+		  const data = { userId: loggedInUserId, groupId };
+		  await joinGroup(data);
+		  showSnackbar("You have joined the group.", "success");
+		  console.log("joined group with id: ", groupId);
+		  fetchUserGroups();
+		  setActiveGroups(prevGroups => prevGroups.filter(group => group.groupId !== groupId));
 		} catch (error) {
-			console.error('Error joining group:', error);
+			console.error("Error joining group:", error);
 		}
-	};
+	}
+
+	useEffect(() => {
+		console.log("userGroups: ", userGroups);
+		console.log("activeGroups: ", activeGroups);
+	}, [userGroups, activeGroups]);
 
 	return (
 		<div className="competra-dashboard">
@@ -123,6 +130,7 @@ const CompetraDashboard = () => {
 					onClose={closeSnackbar}
 				/>
 			)}
+			<PhoneNavbar />
 		</div>
 	);
 };

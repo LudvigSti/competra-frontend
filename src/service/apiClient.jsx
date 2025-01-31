@@ -20,6 +20,26 @@ async function getUserGroupByUserId(userId) {
 	return res;
 }
 
+async function getAllUserActivities(){
+  const res = await get('useractivity/');
+  return res;
+}
+
+async function getAllUsers(){
+  const res = await get('user/');
+  return res;
+}
+
+async function getAllUserActivities(){
+  const res = await get('useractivity/');
+  return res;
+}
+
+async function getAllUsers(){
+  const res = await get('user/');
+  return res;
+}
+
 async function joinGroup(data) {
 	const res = await post('usergroup', data);
 	return res;
@@ -32,8 +52,19 @@ async function leaveGroup(userId, groupId) {
 
 //GROUP
 
-async function getActiveGroups(userId) {
-	const res = await get(`group/${userId}`);
+async function getActiveGroups(userId){
+  const res = await get(`group/${userId}`);
+  return res;
+}
+
+async function getActivitiesByGroupId(groupId) {
+	const res = await get(`activity/${groupId}`);
+	return res;
+}
+
+// ACTIVITIES
+async function getLeaderboardByActivityId(activityId) {
+	const res = await get(`activity/leaderboard/${activityId}`);
 	return res;
 }
 
@@ -102,6 +133,17 @@ async function request(method, endpoint, data, auth = true) {
 	return text ? JSON.parse(text) : {};
 }
 
+export {
+  logInUser,
+  registerUser,
+  getUserGroupByUserId,
+  getAllUserActivities,
+  getAllUsers,
+  joinGroup,
+  leaveGroup,
+  getActiveGroups,
+  createMatch
+}
 export {
 	logInUser,
 	registerUser,

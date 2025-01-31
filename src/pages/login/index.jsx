@@ -2,8 +2,8 @@ import { useState } from 'react';
 // import useAuth from '../../hooks/useAuth';
 import { FaRegEye } from 'react-icons/fa';
 import { FaRegEyeSlash } from 'react-icons/fa';
-// import Snackbar from '../../components/common/snackbar';
-// import useSnackbar from '../../hooks/useSnackbar';
+import Snackbar from '../../components/common/snackbar';
+import useSnackbar from '../../hooks/useSnackbar';
 import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import useModal from '../../hooks/useModal';
@@ -15,7 +15,7 @@ const LoginPage = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const { onLogin } = useAuth();
-	// const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
+	const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
 
 	// MODAL TESTING
 	const { openModal, setModal } = useModal();
@@ -38,7 +38,7 @@ const LoginPage = () => {
 			await onLogin(formData);
 		} catch (error) {
 			console.error('Error during login:', error);
-			// showSnackbar('Invalid username or password.', 'error');
+			showSnackbar('Invalid username or password.', 'error');
 		} finally {
 			setIsSubmitting(false);
 		}
@@ -128,13 +128,13 @@ const LoginPage = () => {
 				<button onClick={handleModal}>Modal test</button>
 			</div>
 
-			{/* {snackbar.isOpen && (
+			{snackbar.isOpen && (
 				<Snackbar
 					message={snackbar.message}
 					type={snackbar.type}
 					onClose={closeSnackbar}
 				/>
-			)} */}
+			)}
 		</div>
 	);
 };
