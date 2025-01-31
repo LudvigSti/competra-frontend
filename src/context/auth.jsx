@@ -3,113 +3,117 @@ import { createContext, useEffect, useState, useContext } from 'react';
 import { useNavigate, Navigate, useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { logInUser, registerUser } from '../service/apiClient';
+import { jwtDecode } from 'jwt-decode';
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const navigate = useNavigate();
-  const [token, setToken] = useState(null);
-  const [loggedInUser, setLoggedInUser] = useState(null);
+	const navigate = useNavigate();
+	const [token, setToken] = useState(null);
+	const [loggedInUserId, setLoggedInUserId] = useState(null);
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('loggedInUser');
+	useEffect(() => {
+		const storedToken = localStorage.getItem('token');
+		// const storedUser = localStorage.getItem('loggedInUser');
 
-    if (storedToken) {
-      setToken(storedToken);
-    }
+		if (storedToken) {
+			setToken(storedToken);
+		}
 
-    if (storedUser) {
-      setLoggedInUser(JSON.parse(storedUser));
-    }
-  }, []);
+		// if (storedUser) {
+		// 	setLoggedInUser(JSON.parse(storedUser));
+		// }
+	}, []);
 
-  useEffect(() => {
-    if (token) {
-      const redirectPath = localStorage.getItem('redirectPath');
+	useEffect(() => {
+		if (token) {
+			const redirectPath = localStorage.getItem('redirectPath');
 
-      if (redirectPath) {
-        localStorage.removeItem('redirectPath');
-        navigate(redirectPath);
-      } else {
-        localStorage.setItem('redirectPath', '/');
-        navigate('/');
-      }
-    }
-  }, [token]);
+			if (redirectPath) {
+				localStorage.removeItem('redirectPath');
+				navigate(redirectPath);
+			} else {
+				localStorage.setItem('redirectPath', '/');
+				navigate('/');
+			}
+		}
+	}, [token]);
 
-  const handleLogin = async (data) => {
-    const res = await logInUser(data);
+	const handleLogin = async (data) => {
+		const res = await logInUser(data);
 
-    if (!res.token) {
-      return navigate('/');
-    }
+		if (!res.token) {
+			return navigate('/');
+		}
 
-    localStorage.setItem('token', res.token);
-    setToken(res.token);
+		localStorage.setItem('token', res.token);
+		setToken(res.token);
 
-    // const user = await getUserByIdAsync(jwtDecode(res.token).UserId);
-    // localStorage.setItem('loggedInUser', JSON.stringify(user));
-    // setLoggedInUser(user);
+		// const user = await getUserByIdAsync(jwtDecode(res.token).UserId);
+		// localStorage.setItem('loggedInUser', JSON.stringify(user));
+		// setLoggedInUser(user);
 
-    localStorage.setItem('redirectPath', '/dashboard');
+		const decodedToken = jwtDecode(res.token);
+		setLoggedInUserId(parseInt(decodedToken.sub, 10));
 
-    navigate('/dashboard');
-  };
+		localStorage.setItem('redirectPath', '/dashboard');
 
-//  const handleLogout = () => {
-//     localStorage.removeItem('token');
-//     localStorage.removeItem('loggedInUser');
+		navigate('/dashboard');
+	};
 
-//     setToken(null);
-//     setLoggedInUser(null);
+	//  const handleLogout = () => {
+	//     localStorage.removeItem('token');
+	//     localStorage.removeItem('loggedInUser');
 
-//     localStorage.setItem('redirectPath', '/');
-//     navigate('/');
-//   };
+	//     setToken(null);
+	//     setLoggedInUser(null);
 
-  const handleRegister = async (data) => {
-    const res = await registerUser(data);
-    
-    if (!res.token) {
-      return navigate('/register');
-    }
+	//     localStorage.setItem('redirectPath', '/');
+	//     navigate('/');
+	//   };
 
-    localStorage.setItem('token', res.token);
-    setToken(res.token);
+	const handleRegister = async (data) => {
+		const res = await registerUser(data);
 
-    // const user = await getUserByIdAsync(jwtDecode(res.token).UserId);
-    // localStorage.setItem('loggedInUser', JSON.stringify(user));
-    // setLoggedInUser(user);
+		if (!res.token) {
+			return navigate('/register');
+		}
 
-    localStorage.setItem('redirectPath', '/dashboard');
-    navigate('/dashboard');
-  };
+		localStorage.setItem('token', res.token);
+		setToken(res.token);
 
-  const value = {
-    token,
-    loggedInUser,
-    onLogin: handleLogin,
-    // onLogout: handleLogout,
-    onRegister: handleRegister
-  };
+		// const user = await getUserByIdAsync(jwtDecode(res.token).UserId);
+		// localStorage.setItem('loggedInUser', JSON.stringify(user));
+		// setLoggedInUser(user);
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+		localStorage.setItem('redirectPath', '/dashboard');
+		navigate('/dashboard');
+	};
+
+	const value = {
+		token,
+		loggedInUserId,
+		onLogin: handleLogin,
+		// onLogout: handleLogout,
+		onRegister: handleRegister,
+	};
+
+	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 const ProtectedRoute = ({ children }) => {
-  const { token } = useAuth();
-  const location = useLocation();
+	const { token } = useAuth();
+	const location = useLocation();
 
-  if (!token) {
-    if (!localStorage.getItem('redirectPath')) {
-      localStorage.setItem('redirectPath', location.pathname);
-    }
+	if (!token) {
+		if (!localStorage.getItem('redirectPath')) {
+			localStorage.setItem('redirectPath', location.pathname);
+		}
 
-    return <Navigate to="/" replace state={{ from: location }} />;
-  }
+		return <Navigate to="/" replace state={{ from: location }} />;
+	}
 
-  return children;
+	return children;
 };
 
 export { AuthContext, AuthProvider, ProtectedRoute };

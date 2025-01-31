@@ -6,6 +6,7 @@ import { FaRegEyeSlash } from 'react-icons/fa';
 // import useSnackbar from '../../hooks/useSnackbar';
 import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import useModal from '../../hooks/useModal';
 import './style.css';
 
 const LoginPage = () => {
@@ -15,6 +16,9 @@ const LoginPage = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const { onLogin } = useAuth();
 	// const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
+
+	// MODAL TESTING
+	const { openModal, setModal } = useModal();
 
 	const onChange = (event) => {
 		const { name, value } = event.target;
@@ -26,6 +30,7 @@ const LoginPage = () => {
 	const handleLogin = async (event) => {
 		event.preventDefault();
 		// if (!validateInputs()) return;
+		console.log("BACKEND URL: ", import.meta.env.VITE_BACKEND_URL);
 
 		setIsSubmitting(true);
 
@@ -37,6 +42,12 @@ const LoginPage = () => {
 		} finally {
 			setIsSubmitting(false);
 		}
+	};
+
+	// MODAL TESTING
+	const handleModal = () => {
+		setModal('Modal title test', <h1>Modal content test</h1>);
+		openModal();
 	};
 
 	// const handleLogin = (e) => {
@@ -113,6 +124,8 @@ const LoginPage = () => {
 						Create a new account?
 					</Link>
 				</form>
+
+				<button onClick={handleModal}>Modal test</button>
 			</div>
 
 			{/* {snackbar.isOpen && (
