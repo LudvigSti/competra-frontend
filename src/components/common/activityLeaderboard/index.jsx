@@ -9,6 +9,7 @@ export default function ActivityLeaderboard({ activityId }) {
 
 	useEffect(() => {
 		// Fetch leaderboard data from API if needed
+		console.log(activityId);
 	}, [activityId]);
 
 	if (!activity) {
