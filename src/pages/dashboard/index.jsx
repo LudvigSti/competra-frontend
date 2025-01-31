@@ -105,12 +105,12 @@ const CompetraDashboard = () => {
 						<li key={index} className="group-item">
 							<span
 								className="group-name"
-								onClick={() => handleGroupClick(group.id)}>
+								onClick={() => handleGroupClick(group.groupId)}>
 								{group.groupName}
 							</span>
 							<button
 								className="group-action join"
-								onClick={() => handleGroupJoin(group.id)}>
+								onClick={() => handleGroupJoin(group.groupId)}>
 								JOIN
 							</button>
 						</li>
