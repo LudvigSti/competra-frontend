@@ -69,13 +69,20 @@ async function getActivitiesByGroupId(groupId) {
 }
 
 async function checkIfUserIsInActivity(activityId, userId) {
-	const res = await get(`UserActivity/${activityId}/${userId}`);
+	const res = await get(`UserActivity/IfInActivity/${activityId}/${userId}`);
 	return res;
 }
 
 async function joinUserActivity(data) {
 	const res = await post('useractivity', data);
 	return res;
+}
+
+//http://localhost/UserActivity/1/1
+
+async function leaveUserActivity(activityId, userId) {
+  const res = await del(`UserActivity/${activityId}/${userId}`);
+  return res;
 }
 
 // CRUD FUNCTIONS
@@ -147,4 +154,5 @@ export {
 	checkIfUserIsInActivity,
 	joinUserActivity,
 	getGroupByGroupId,
+  leaveUserActivity,
 };

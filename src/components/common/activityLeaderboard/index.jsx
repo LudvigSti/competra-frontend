@@ -5,11 +5,16 @@ export default function ActivityLeaderboard({ leaderboard }) {
 	const [currentLeaderboard, setCurrentLeaderboard] = useState([]);
 
 	useEffect(() => {
+		console.log('Leaderboard data: ', leaderboard)
 		setCurrentLeaderboard(leaderboard);
 	}, [leaderboard]);
 
-	if (!leaderboard) {
-		return <p>Loading...</p>;
+	if (!leaderboard){
+		return <p>Loading...</p>
+	}
+
+	if (leaderboard.length === 0) {
+		return <p>No entries in the leaderboard.</p>;
 	}
 
 	return (
