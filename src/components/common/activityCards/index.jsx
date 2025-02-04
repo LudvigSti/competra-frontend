@@ -6,29 +6,41 @@ import {
 	checkIfUserIsInActivity,
 	joinUserActivity,
 	getLeaderboardByActivityId,
+	leaveUserActivity,
 } from '../../../service/apiClient';
 import Snackbar from '../../common/snackbar';
 import useSnackbar from '../../../hooks/useSnackbar';
 import './style.css';
 
 export default function ActivityCard({ activity }) {
-	const [currentActivity, setCurrentActivity] = useState([]);
+	const [currentActivity, setCurrentActivity] = useState(activity);
 	const [isInActivity, setIsInActivity] = useState(false);
 	const [leaderboard, setLeaderboard] = useState([]);
 	const { snackbar, showSnackbar, closeSnackbar } = useSnackbar();
 	const { loggedInUserId } = useAuth();
 
+	// useEffect(() => {
+	// 	if (currentActivity?.participant?.some(p => p.userId === loggedInUserId)) {
+	// 		setIsInActivity(true);
+	// 	} else {
+	// 		setIsInActivity(false);
+	// 	}
+				
+	// 	}, [currentActivity, loggedInUserId]);
+	
+
 	// Checks if the logged in user is in the activity
 	useEffect(() => {
 		setCurrentActivity(activity);
-
 		const fetchActivityStatus = async () => {
 			try {
 				const response = await checkIfUserIsInActivity(
 					activity.activityId,
 					loggedInUserId
 				);
+				console.log('Activity status response:', response);
 				setIsInActivity(response);
+				console.log('isInActivity:', response);
 			} catch (error) {
 				console.error('Error checking activity status:', error);
 			}
@@ -37,22 +49,52 @@ export default function ActivityCard({ activity }) {
 		fetchActivityStatus();
 	}, [activity, loggedInUserId]);
 
-	// Fetches leaderboard data
+	// useEffect(() => {
+	// 	const fetchActivityLeaderboard = async () => {
+	// 		try {
+	// 			const data = await getLeaderboardByActivityId(activity.activityId);
+	// 			console.log('Leaderboard data: ', data);
+	// 			setLeaderboard(data);
+	// 		} catch (error) {
+	// 			console.error('Error fetching leaderboard:', error);
+	// 		}
+	// 	};
+	// 	fetchActivityLeaderboard();
+	// }, [activity.activityId]);
+
+	//Fetches leaderboard data
 	useEffect(() => {
 		fetchActivityLeaderboard();
-	}, []);
+	}, [activity.activityId]);
 
 	const fetchActivityLeaderboard = async () => {
-		const data = await getLeaderboardByActivityId(activity.activityId);
-		setLeaderboard(data);
+		try { 
+			const data = await getLeaderboardByActivityId(activity.activityId);
+			setLeaderboard(data);
+		} catch (error) {
+			console.error('Error fetching leaderboard:', error);
+		}
+		
 	};
 
-	const handleLeave = (activityId) => {
-		console.log(loggedInUserId + ' has left activity ' + activityId);
+	const handleLeave = async (activityId) => {
+		try {
+			await leaveUserActivity(activityId, loggedInUserId);
+			setIsInActivity(false);
+			showSnackbar('You have left the activity.', 'success');
+			fetchActivityLeaderboard();
+		} catch (error) {
+			console.error('Error leaving activity:', error);
+			showSnackbar('Error leaving activity.', 'error');
+		}
 		// fetchActivityLeaderboard();
 	};
 
 	const handleJoin = async (activityId) => {
+		if (isInActivity) {
+			showSnackbar('You are already in this activity.', 'error');
+			return;
+		}
 		try {
 			const data = { userId: loggedInUserId, activityId };
 			await joinUserActivity(data);
