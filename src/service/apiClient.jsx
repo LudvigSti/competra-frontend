@@ -14,19 +14,14 @@ async function registerUser(data) {
 	return res;
 }
 
+async function getAllUsers() {
+	const res = await get('user/');
+	return res;
+}
+
 //USER GROUP
 async function getUserGroupByUserId(userId) {
 	const res = await get(`usergroup/${userId}/`);
-	return res;
-}
-
-async function getAllUserActivities() {
-	const res = await get('useractivity/');
-	return res;
-}
-
-async function getAllUsers() {
-	const res = await get('user/');
 	return res;
 }
 
@@ -40,22 +35,53 @@ async function leaveGroup(userId, groupId) {
 	return res;
 }
 
+//USER ACTIVITY
+
+async function getAllUserActivities() {
+	const res = await get('useractivity/');
+	return res;
+}
+
+async function checkIfUserIsInActivity(activityId, userId) {
+	const res = await get(`userActivity/IfInActivity/${activityId}/${userId}`);
+	return res;
+}
+
+async function joinUserActivity(data) {
+	const res = await post('useractivity', data);
+	return res;
+}
+
+async function leaveUserActivity(activityId, userId) {
+	const res = await del(`userActivity/${activityId}/${userId}`);
+	return res;
+  }
+
+
 //GROUP
+
+async function getGroupByGroupId(groupId) {
+	const res = await get(`group/${groupId}`);
+	return res;
+}
 
 async function getActiveGroups(userId) {
 	const res = await get(`group/unjoined/${userId}`);
 	return res;
 }
 
+//MATCH
+
 async function createMatch(data) {
 	const res = await post('match', data);
 	return res;
 }
 
-async function getGroupByGroupId(groupId) {
-	const res = await get(`group/${groupId}`);
+async function getMatchHistoryByUserAndActivityId(userId, activityId) {
+	const res = await get(`match/${userId}/${activityId}`);
 	return res;
 }
+
 
 // ACTIVITIES
 async function getLeaderboardByActivityId(activityId) {
@@ -66,23 +92,6 @@ async function getLeaderboardByActivityId(activityId) {
 async function getActivitiesByGroupId(groupId) {
 	const res = await get(`activity/${groupId}`);
 	return res;
-}
-
-async function checkIfUserIsInActivity(activityId, userId) {
-	const res = await get(`UserActivity/IfInActivity/${activityId}/${userId}`);
-	return res;
-}
-
-async function joinUserActivity(data) {
-	const res = await post('useractivity', data);
-	return res;
-}
-
-//http://localhost/UserActivity/1/1
-
-async function leaveUserActivity(activityId, userId) {
-  const res = await del(`UserActivity/${activityId}/${userId}`);
-  return res;
 }
 
 // CRUD FUNCTIONS
@@ -154,5 +163,6 @@ export {
 	checkIfUserIsInActivity,
 	joinUserActivity,
 	getGroupByGroupId,
-  leaveUserActivity,
+  	leaveUserActivity,
+	getMatchHistoryByUserAndActivityId,
 };
