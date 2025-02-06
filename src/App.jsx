@@ -8,6 +8,7 @@ import RegisterPage from './pages/register';
 import GroupPage from './pages/group';
 import CompetraDashboard from './pages/dashboard';
 import CreateMatch from './pages/createMatch';
+import ProfilePage from './pages/profilepage';
 
 function App() {
 	return (
@@ -18,6 +19,8 @@ function App() {
 				<Route path="/dashboard" element={<CompetraDashboard />} />
 				<Route path="/group/:groupId" element={<GroupPage />} />
 				<Route path="/createMatch" element={<CreateMatch />} />
+				<Route path="/profile" element={<ProfilePage />} />
+				
 			</Routes>
 		</>
 	);

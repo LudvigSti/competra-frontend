@@ -9,6 +9,8 @@ import {
 } from '../../service/apiClient';
 import './style.css';
 
+
+
 export default function GroupPage() {
     const { groupId } = useParams();
     const [activities, setActivities] = useState([]);
