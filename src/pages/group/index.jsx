@@ -9,6 +9,8 @@ import {
 } from '../../service/apiClient';
 import './style.css';
 
+
+
 export default function GroupPage() {
 	const { groupId } = useParams();
 	const [activities, setActivities] = useState([]);
@@ -48,6 +50,7 @@ export default function GroupPage() {
 			</div>
 
 			<h2>Recent Matches</h2>
+			
 			<div className="recent-matches">
 				{mockGroupData.recentMatches.map((match) => (
 					<div key={match.id} className="match-card">

@@ -14,19 +14,14 @@ async function registerUser(data) {
 	return res;
 }
 
+async function getAllUsers() {
+	const res = await get('user/');
+	return res;
+}
+
 //USER GROUP
 async function getUserGroupByUserId(userId) {
 	const res = await get(`usergroup/${userId}/`);
-	return res;
-}
-
-async function getAllUserActivities() {
-	const res = await get('useractivity/');
-	return res;
-}
-
-async function getAllUsers() {
-	const res = await get('user/');
 	return res;
 }
 
@@ -47,13 +42,30 @@ async function getActiveGroups(userId) {
 	return res;
 }
 
+async function getGroupByGroupId(groupId) {
+	const res = await get(`group/${groupId}`);
+	return res;
+}
+
+//MATCH
+
 async function createMatch(data) {
 	const res = await post('match', data);
 	return res;
 }
 
-async function getGroupByGroupId(groupId) {
-	const res = await get(`group/${groupId}`);
+async function getMatchHistoryByUserIdAndActivityId(activityId, userId) {
+	const res = await get(`match/${activityId}/${userId}`);
+	return res;
+}
+
+async function getMatchHistoryByUserId(userId) {
+	const res = await get(`match/${userId}`);
+	return res;
+}
+
+async function getMatchHistoryByActivityId(activityId) {
+	const res = await get(`match/activity/${activityId}`);
 	return res;
 }
 
@@ -68,6 +80,13 @@ async function getActivitiesByGroupId(groupId) {
 	return res;
 }
 
+// USER ACTIVITIES
+
+async function getAllUserActivities() {
+	const res = await get('useractivity/');
+	return res;
+}
+
 async function checkIfUserIsInActivity(activityId, userId) {
 	const res = await get(`UserActivity/IfInActivity/${activityId}/${userId}`);
 	return res;
@@ -78,11 +97,15 @@ async function joinUserActivity(data) {
 	return res;
 }
 
-//http://localhost/UserActivity/1/1
-
 async function leaveUserActivity(activityId, userId) {
   const res = await del(`UserActivity/${activityId}/${userId}`);
   return res;
+}
+
+async function getUserActivitiesByUserId(userId) {
+	const res = await get(`UserActivity/${userId}`);
+	console.log(res ,"hei");
+	return res;
 }
 
 // CRUD FUNCTIONS
@@ -154,5 +177,9 @@ export {
 	checkIfUserIsInActivity,
 	joinUserActivity,
 	getGroupByGroupId,
-  leaveUserActivity,
+  	leaveUserActivity,
+	getMatchHistoryByUserIdAndActivityId,
+	getMatchHistoryByUserId,
+	getMatchHistoryByActivityId,
+	getUserActivitiesByUserId,
 };
