@@ -35,10 +35,43 @@ async function leaveGroup(userId, groupId) {
 	return res;
 }
 
+//USER ACTIVITY
+
+async function getAllUserActivities() {
+	const res = await get('useractivity/');
+	return res;
+}
+
+async function checkIfUserIsInActivity(activityId, userId) {
+	const res = await get(`userActivity/IfInActivity/${activityId}/${userId}`);
+	return res;
+}
+
+async function joinUserActivity(data) {
+	const res = await post('useractivity', data);
+	return res;
+}
+
+async function leaveUserActivity(activityId, userId) {
+	const res = await del(`userActivity/${activityId}/${userId}`);
+	return res;
+  }
+
+
 //GROUP
+
+async function getGroupByGroupId(groupId) {
+	const res = await get(`group/${groupId}`);
+	return res;
+}
 
 async function getActiveGroups(userId) {
 	const res = await get(`group/unjoined/${userId}`);
+	return res;
+}
+
+async function createMatch(data) {
+	const res = await post('match', data);
 	return res;
 }
 
@@ -47,27 +80,6 @@ async function getGroupByGroupId(groupId) {
 	return res;
 }
 
-//MATCH
-
-async function createMatch(data) {
-	const res = await post('match', data);
-	return res;
-}
-
-async function getMatchHistoryByUserIdAndActivityId(activityId, userId) {
-	const res = await get(`match/${activityId}/${userId}`);
-	return res;
-}
-
-async function getMatchHistoryByUserId(userId) {
-	const res = await get(`match/${userId}`);
-	return res;
-}
-
-async function getMatchHistoryByActivityId(activityId) {
-	const res = await get(`match/activity/${activityId}`);
-	return res;
-}
 
 // ACTIVITIES
 async function getLeaderboardByActivityId(activityId) {
@@ -97,15 +109,11 @@ async function joinUserActivity(data) {
 	return res;
 }
 
+//http://localhost/UserActivity/1/1
+
 async function leaveUserActivity(activityId, userId) {
   const res = await del(`UserActivity/${activityId}/${userId}`);
   return res;
-}
-
-async function getUserActivitiesByUserId(userId) {
-	const res = await get(`UserActivity/${userId}`);
-	console.log(res ,"hei");
-	return res;
 }
 
 // CRUD FUNCTIONS
@@ -177,9 +185,5 @@ export {
 	checkIfUserIsInActivity,
 	joinUserActivity,
 	getGroupByGroupId,
-  	leaveUserActivity,
-	getMatchHistoryByUserIdAndActivityId,
-	getMatchHistoryByUserId,
-	getMatchHistoryByActivityId,
-	getUserActivitiesByUserId,
+  leaveUserActivity,
 };
