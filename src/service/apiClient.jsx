@@ -70,13 +70,15 @@ async function getActiveGroups(userId) {
 	return res;
 }
 
+//MATCH
+
 async function createMatch(data) {
 	const res = await post('match', data);
 	return res;
 }
 
-async function getGroupByGroupId(groupId) {
-	const res = await get(`group/${groupId}`);
+async function getMatchHistoryByUserAndActivityId(userId, activityId) {
+	const res = await get(`match/${userId}/${activityId}`);
 	return res;
 }
 
@@ -92,28 +94,9 @@ async function getActivitiesByGroupId(groupId) {
 	return res;
 }
 
-// USER ACTIVITIES
-
-async function getAllUserActivities() {
-	const res = await get('useractivity/');
+async function getRecentMatchesByGroupId(groupId) {
+	const res = await get(`match/group/${groupId}`);
 	return res;
-}
-
-async function checkIfUserIsInActivity(activityId, userId) {
-	const res = await get(`UserActivity/IfInActivity/${activityId}/${userId}`);
-	return res;
-}
-
-async function joinUserActivity(data) {
-	const res = await post('useractivity', data);
-	return res;
-}
-
-//http://localhost/UserActivity/1/1
-
-async function leaveUserActivity(activityId, userId) {
-  const res = await del(`UserActivity/${activityId}/${userId}`);
-  return res;
 }
 
 // CRUD FUNCTIONS
@@ -185,5 +168,7 @@ export {
 	checkIfUserIsInActivity,
 	joinUserActivity,
 	getGroupByGroupId,
-  leaveUserActivity,
+  	leaveUserActivity,
+	getMatchHistoryByUserAndActivityId,
+	getRecentMatchesByGroupId
 };
