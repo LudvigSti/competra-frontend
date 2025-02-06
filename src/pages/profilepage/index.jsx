@@ -1,9 +1,9 @@
-
+/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import './style.css';
-import { formatDateTime } from '../../service/formatDate';
-import { getMatchHistoryByUserId, getUserGroupByUserId, getUserActivitiesByUserId } from '../../service/apiClient';
+import { getMatchHistoryByUserId, getUserGroupByUserId, } from '../../service/apiClient';
+import MatchHistoryCarousel from '../../components/common/matchhistoryCarousel/carousel';
 
 
 const ProfilePage = () => {
@@ -38,24 +38,13 @@ const ProfilePage = () => {
     }, [loggedInUserId]);
     
   
-
-
-
     return (
         <div className='profile-page'>
             <h1>Profile Page</h1>
 
             <section>
                 <h2>Match History</h2>
-                
-                    {matchHistory.map((match) => (
-                        <li className='listH' key={match.id}>
-                            <p>Opponent: {match.opponentName}</p>
-                            <p>Result: {match.result}</p>
-                            <p>Elo Change: {match.eloChange}</p>
-                            <p>Date: {formatDateTime(match.createdAt)}</p>
-                        </li>
-                    ))}
+                <MatchHistoryCarousel matchHistory={matchHistory} />
                 
             </section>
 
@@ -87,8 +76,5 @@ const ProfilePage = () => {
     )
 
 }
-
-
-
 
 export default ProfilePage;

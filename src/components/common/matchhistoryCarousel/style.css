@@ -1,0 +1,40 @@
+.horizontal-scroll {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px 0;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+    background-color: transparent;
+}
+
+.horizontal-scroll ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.horizontal-scroll li {
+    flex: 0 0 auto;
+    padding: 15px;
+    margin-right: 10px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+.horizontal-scroll li:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.horizontal-scroll li.active {
+    
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.horizontal-scroll li p {
+    margin: 5px 0;
+    color: #824949;
+}

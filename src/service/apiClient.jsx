@@ -19,6 +19,11 @@ async function getAllUsers() {
 	return res;
 }
 
+async function getUserByUserId(userId) {
+	const res = await get(`user/${userId}`);
+	return res;
+}
+
 //USER GROUP
 async function getUserGroupByUserId(userId) {
 	const res = await get(`usergroup/${userId}/`);
@@ -82,6 +87,22 @@ async function getMatchHistoryByUserAndActivityId(userId, activityId) {
 	return res;
 }
 
+async function getMatchHistoryByUserId(userId){
+	const res = await get(`match/${userId}`);
+	return res;
+}
+
+async function getMatchHistoryByActivityId(activityId) {
+	const res = await get(`match/activity/${activityId}`);
+	return res;
+}
+
+
+
+async function getRecentMatchesByGroupId(groupId) {
+	const res = await get(`match/group/${groupId}`);
+	return res;
+}
 
 // ACTIVITIES
 async function getLeaderboardByActivityId(activityId) {
@@ -91,11 +112,6 @@ async function getLeaderboardByActivityId(activityId) {
 
 async function getActivitiesByGroupId(groupId) {
 	const res = await get(`activity/${groupId}`);
-	return res;
-}
-
-async function getRecentMatchesByGroupId(groupId) {
-	const res = await get(`match/group/${groupId}`);
 	return res;
 }
 
@@ -170,5 +186,8 @@ export {
 	getGroupByGroupId,
   	leaveUserActivity,
 	getMatchHistoryByUserAndActivityId,
-	getRecentMatchesByGroupId
+	getRecentMatchesByGroupId,
+	getMatchHistoryByUserId,
+	getMatchHistoryByActivityId,
+	getUserByUserId,
 };
