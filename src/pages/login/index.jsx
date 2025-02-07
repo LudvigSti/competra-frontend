@@ -45,10 +45,10 @@ const LoginPage = () => {
 	};
 
 	// MODAL TESTING
-	const handleModal = () => {
-		setModal('Modal title test', <h1>Modal content test</h1>);
-		openModal();
-	};
+	// const handleModal = () => {
+	// 	setModal('Modal title test', <h1>Modal content test</h1>);
+	// 	openModal();
+	// };
 
 	// const handleLogin = (e) => {
 	// 	e.preventDefault();
@@ -125,7 +125,7 @@ const LoginPage = () => {
 					</Link>
 				</form>
 
-				<button onClick={handleModal}>Modal test</button>
+				{/* <button onClick={handleModal}>Modal test</button> */}
 			</div>
 
 			{snackbar.isOpen && (
