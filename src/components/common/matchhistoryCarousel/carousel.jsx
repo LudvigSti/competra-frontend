@@ -6,11 +6,13 @@ import './style.css';
 
 const MatchHistoryCarousel = ({ matchHistory }) => 
 {
+    const sortedMatchHistory = [...matchHistory].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     return (
         <div className="horizontal-scroll">
+
             <ul>
-                {matchHistory.map((match) => (
-                    <li className="listH" key={match.id}>
+                {sortedMatchHistory.map((match) => (
+                    <li className={`${match.result.trim().toLowerCase() === 'won' ? 'match-won' : 'match-lost'}`} key={match.id}>
                         <p>Opponent: {match.opponentName}</p>
                         <p>Result: {match.result}</p>
                         <p>Elo Change: {match.eloChange}</p>

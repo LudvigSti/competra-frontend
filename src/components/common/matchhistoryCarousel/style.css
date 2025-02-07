@@ -36,5 +36,14 @@
 }
 .horizontal-scroll li p {
     margin: 5px 0;
-    color: #824949;
+}
+
+.match-won {
+    border-color: green;
+    color: green;
+}
+ 
+.match-lost {
+    border-color: red;
+    color: red;
 }

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import './style.css';
-import { getMatchHistoryByUserId, getUserGroupByUserId, } from '../../service/apiClient';
+import { getMatchHistoryByUserId, getUserGroupByUserId, getUserByUserId } from '../../service/apiClient';
 import MatchHistoryCarousel from '../../components/common/matchhistoryCarousel/carousel';
 
 
@@ -10,6 +10,7 @@ const ProfilePage = () => {
     const [matchHistory, setMatchHistory] = useState([]);
     const [userGroups, setUserGroups] = useState([]);
 //  const [userActivities, setUserActivities] = useState([]);
+    const [userName, setUserName] = useState('');
     const { loggedInUserId } = useAuth();
 
     useEffect(() => {
@@ -20,6 +21,10 @@ const ProfilePage = () => {
 
      const fetchData = async () => {
         try {
+
+            const user = await getUserByUserId(loggedInUserId);
+            console.log(user.username);
+            setUserName(user.username);
             const matches = await getMatchHistoryByUserId(loggedInUserId);
             setMatchHistory(matches);
 
@@ -43,7 +48,7 @@ const ProfilePage = () => {
             <h1>Profile Page</h1>
 
             <section>
-                <h2>Match History</h2>
+                <h2>{userName}'s Match History</h2>
                 <MatchHistoryCarousel matchHistory={matchHistory} />
                 
             </section>
